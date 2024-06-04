@@ -10,11 +10,11 @@ My classwork for [BIMM143 Spring 2024](https://alanarose77.github.io/bimm143_git
 
 - **Class 7** [Machine Learning 1](https://github.com/alanarose77/bimm143_github1/blob/main/Class07/Class07.pdf)
 
-- **Class 8** [Breast Cancer Mini Project]()
+- **Class 8** [Breast Cancer Mini Project](https://github.com/alanarose77/bimm143_github1/blob/main/Class08/Class8.pdf)
 
-- **Class 9** [Candy Analysis Mini Project]()
+- **Class 9** [Candy Analysis Mini Project](https://github.com/alanarose77/bimm143_github1/blob/main/Class09/Class09.pdf)
 
-- **Class 10** [Structural Bioinformatics]()
+- **Class 10** [Structural Bioinformatics](https://github.com/alanarose77/bimm143_github1/blob/main/Class10/Class10.pdf)
 
 - **Class 11** [Genome informatics]()
 
