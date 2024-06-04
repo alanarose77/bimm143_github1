@@ -8,7 +8,7 @@ My classwork for [BIMM143 Spring 2024](https://alanarose77.github.io/bimm143_git
 
 - **Class 6** [R functions](Class06/class06.md)
 
-- **Class 7** [Machine Learning 1](https://github.com/alanarose77/bimm143_github1/blob/main/Class07/Class07.pdf)
+- **Class 7** [Machine Learning 1](Class07/class07.md)
 
 - **Class 8** [Breast Cancer Mini Project](https://github.com/alanarose77/bimm143_github1/blob/main/Class08/Class8.pdf)
 
