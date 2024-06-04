@@ -16,10 +16,10 @@ My classwork for [BIMM143 Spring 2024](https://alanarose77.github.io/bimm143_git
 
 - **Class 10** [Structural Bioinformatics](https://github.com/alanarose77/bimm143_github1/blob/main/Class10/Class10.pdf)
 
-- **Class 11** [Genome informatics]()
+- **Class 11** [Genome informatics](https://github.com/alanarose77/bimm143_github1/blob/main/Class11/Class11.pdf)
 
-- **Class 13** [Transcriptomics and the analysis of RNA-Seq data]()
+- **Class 13** [Transcriptomics and the analysis of RNA-Seq data](https://github.com/alanarose77/bimm143_github1/blob/main/Class13/Class13.pdf)
 
-- **Class 14** [RNASeq Mini-Project]()
+- **Class 14** [RNASeq Mini-Project](https://github.com/alanarose77/bimm143_github1/blob/main/Class14/Class14.pdf)
 
-- **Class 18** [Pertussis Vaccination]()
+- **Class 18** [Pertussis Vaccination](https://github.com/alanarose77/bimm143_github1/blob/main/Class18/class18.pdf)
