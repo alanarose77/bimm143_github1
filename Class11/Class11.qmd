@@ -1,0 +1,106 @@
+---
+title: "Class 11: Genome informatics"
+author: "Alana (PID: A16738319)"
+format: pdf
+editor: visual
+---
+
+# Section 1. Proportion of G/G in a population
+
+Downloaded a CSV file from Ensemble < https://useast.ensembl.org/Homo_sapiens/Variation/Sample?db=core;r=17:39790098-40000099;v=rs8067378;vdb=variation;vf=959672880#373531_tablePanel >
+
+Here we read this CSV file
+
+```{r}
+mxl <- read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378 (3).csv")
+head(mxl)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.) / nrow(mxl) * 100
+```
+
+Now let's look at a different poplation. I picked the GBR. 
+
+```{r}
+gbr <- read.csv("373522-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+head(gbr)
+```
+
+Find proportion of G|G 
+
+```{r}
+round(table(gbr$Genotype..forward.strand.) / nrow(gbr) * 100, 2)
+```
+
+This variant that is associated with childhood asthma is more frequent in the GBR population than the MKL population. 
+
+Lets now dig into this further. 
+
+## Section 4: Population Scale Analysis
+
+One sample is obviously not enough to know what is happening in a population. You are interested in assessing genetic differences on a population scale. 
+
+So, you processed about ~230 samples and did the normalization on a genome level. Now, you want to find whether there is any association of the 4 asthma-associated SNPs (rs8067378...) on ORMDL3
+expression.
+
+> Q13: Read this file into R and determine the sample size for each genotype and their
+corresponding median expression levels for each of these genotypes. 
+
+How many samples do we have? 
+
+```{r}
+expr <- read.table("rs8067378_ENSG00000172057.6.txt", head=TRUE)
+head(expr)
+```
+
+```{r}
+str(expr)
+```
+
+
+```{r}
+nrow(expr)
+```
+
+```{r}
+sample_sizes<- table(expr$geno)
+sample_sizes
+```
+
+```{r}
+names(expr) <- c("Sample", "Genotype", "Expression")
+
+# Calculate median expression levels for each genotype
+median_expressions <- aggregate(Expression ~ Genotype, data = expr, FUN = median)
+
+# Print the results
+print(sample_sizes)
+print(median_expressions)
+```
+
+> Q14: Generate a boxplot with a box per genotype, what could you infer from the relative expression value between A/A and G/G displayed in this plot? Does the SNP effect the expression of ORMDL3?
+
+Let's make a boxplot. 
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(expr) + aes(x=Genotype , y=Expression, fill=Genotype) + geom_boxplot(notch=TRUE)
+```
+The boxplot displays expression levels for three genotypes (A/A, A/G, and G/G) of a specific SNP.
+
+The A/A genotype shows higher median expression levels of the gene compared to the G/G genotype. This suggests that the presence of the A allele may be associated with increased expression of the ORMDL3 gene.
+
+The spread of expression values (as seen from the interquartile range and the whiskers of the boxplot) is wider in the A/A genotype compared to the G/G genotype, indicating more variability in expression among individuals with the A/A genotype.
+
+The observed differences in the expression levels across the genotypes A/A and G/G indicate that the SNP likely influences ORMDL3 gene expression. Specifically, individuals with the A/A genotype exhibit higher expression levels than those with the G/G genotype. This suggests that the A allele might enhance the gene's expression. Such a finding is significant, particularly if the ORMDL3 gene is implicated in health conditions like asthma, as it could inform genetic research into how variations influence disease mechanisms and outcomes.
+
+
+
