@@ -1,0 +1,221 @@
+---
+title: "Class 8: Breast Cancer Mini Project"
+author: "Alana (PID: A16738319)"
+format: pdf
+editor: visual
+---
+
+## About 
+
+In today's lab we will work with fine needle aspiration (FNA) of breast mass data from the Univesity of Wisconsin. 
+
+# Data Import 
+
+```{r}
+fna.data="WisconsinCancer.csv"
+wisc.df = read.csv(fna.data, row.names=1)
+head(wisc.df)
+```
+
+## Exploratory data analysis
+
+>The first step of any data analysis, unsupervised or supervised, is to familiarize yourself with the data.Explore the data you created before (wisc.data and diagnosis) to answer the following questions:
+
+> Q1. How many observations/patients/individual samples are in this dataset? 
+
+569 Observations
+
+> Q2. How many of the observations have a malignant diagnosis? 
+
+```{r}
+sum(wisc.df$diagnosis == "M")
+```
+
+>table function super useful - it shows 357 binign and 212 malignant 
+
+```{r}
+table(wisc.df$diagnosis)
+```
+
+
+> Q3. How many Variables/features in the data are suffixed with _mean?
+
+```{r}
+ncol(wisc.df)
+```
+
+
+```{r}
+colnames(wisc.df)
+```
+
+
+```{r}
+inds <- grep("_mean", colnames(wisc.df))
+inds
+```
+
+```{r}
+length(inds)
+```
+
+```{r}
+grep("_mean", colnames(wisc.df), value=T)
+```
+
+## Initial Analysis 
+
+Before analysis I want to take out the expert diagnosis column (a.k.a the answer) from our dataset. 
+
+
+```{r}
+diagnosis <- as.factor(wisc.df$diagnosis)
+head(diagnosis)
+```
+ 
+ >this will remove that first diagnosis column and print everything following the first diagnosis column 
+
+```{r}
+wisc.data <- wisc.df[,-1]
+```
+
+
+
+
+## Clustering 
+
+We can try kmeans() clustering first. 
+
+```{r}
+km <- kmeans(wisc.data, centers=2)
+```
+
+
+```{r}
+table(km$cluster)
+```
+
+Cross-table 
+
+```{r}
+table(km$cluster, diagnosis)
+```
+
+Let's try `hclust()` the key input required for `hclust()` is a distance matrix as produced by the `dist()` function. 
+
+
+```{r}
+hc <- hclust(dist(wisc.data))
+```
+
+
+I can make a tree like fugure 
+
+```{r}
+plot(hc)
+```
+
+
+
+## PCA
+
+Dp we need to scale the data? 
+
+We can look at the sd of each column (original variable)
+
+
+```{r}
+round(apply(wisc.data, 2, sd))
+```
+
+
+
+Yes we need to scale. We will run `prcomp()` with `scale=TRUE`.
+
+```{r}
+wisc.pr <- prcomp(wisc.data, scale=TRUE)
+summary(wisc.pr)
+```
+
+Generate our main PCA plot (score plot, PC1 vs PC2 plot)...
+
+```{r}
+library(ggplot2)
+
+res <- as.data.frame(wisc.pr$x)
+```
+
+```{r}
+ggplot(res) + 
+  aes(PC1, PC2, col=diagnosis) + 
+  geom_point()
+```
+The PCA plot show a separation of Malignant (turquoise) from Benign (red) samples. 
+
+
+## Combining methods 
+
+Clustering on PCA results 
+
+Using the minimum number of principal components required to describe at least 90% of the variability in the data, create a hierarchical clustering model with the linkage method="ward.D2". We use Ward’s criterion here because it is based on multidimensional variance like principal components analysis. Assign the results to wisc.pr.hclust.
+
+```{r}
+d <- dist(wisc.pr$x[,1:3])   
+hc <- hclust(d, method="ward.D2")
+plot(hc)
+```
+
+
+
+To get my clustering results/membership vector I need to "cut" the tree with the `cutree()` function. 
+
+
+```{r}
+grps <- cutree(hc, k=2)
+```
+
+
+
+> Q. How many patients are in each culster? 
+
+```{r}
+table(grps)
+```
+
+
+```{r}
+plot(res$PC1, res$PC2, col=grps)
+```
+
+
+## Prediction 
+
+We can use our PCA result (model) to do predictions, that is take new unseen data and project it onto our new PC variables. 
+
+
+```{r}
+url <- "https://tinyurl.com/new-samples-CSV"
+new <- read.csv(url)
+npc <- predict(wisc.pr, newdata=new)
+npc
+```
+
+
+
+```{r}
+plot(res$PC1, res$PC2, col=grps)
+points(npc[,1], npc[,2], col="blue", pch=16, cex=3)
+text(npc[,1], npc[,2], labels=c(1,2), col="white")
+```
+
+# Summary 
+
+Principle Component Analysis (PCA) is a super useful method for analyzing large datasets. It works by finding new variables (PCs) that capture the most variance from original variables in your dataset. 
+
+
+
+
+
+
+
+
