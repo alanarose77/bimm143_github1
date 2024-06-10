@@ -4,7 +4,7 @@ My classwork for [BIMM143 Spring 2024](https://alanarose77.github.io/bimm143_git
 
 - **Class 4** [R Basics](https://github.com/alanarose77/bimm143_github1/blob/main/Class04/lab4.pdf)
 
-- **Class 5** [Data visualization with ggplot](https://github.com/alanarose77/bimm143_github1/blob/main/Class05/class05.pdf)
+- **Class 5** [Data visualization with ggplot](Class05/class05.md)
 
 - **Class 6** [R functions](Class06/class06.md)
 
